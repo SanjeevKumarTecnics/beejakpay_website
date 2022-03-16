@@ -7485,18 +7485,20 @@ ul.wp-block-latest-posts.is-grid.alignwide {
 }
 .sbst-offer-area .media{
   align-items: center;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
 }
-.single-offer .media .media-body{
+/* .single-offer .media .media-body{
   text-align: center;
-}
+} */
 .single-offer{
-  min-height: 300px;
+  min-height: 130px;
+  padding: 30px 20px !important
 }
 .single-offer .media .media-body h6{
-  font-size: 18px;
-  font-weight: 500;
-  margin-top: 20px;
+  font-size: 13px;
+  font-weight: 400;
+  /* margin-top: 20px; */
   color: #333;
+  line-height: 1.8;
 }
