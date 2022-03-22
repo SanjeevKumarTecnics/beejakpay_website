@@ -1,7 +1,58 @@
+<?php 
+    
+    if(isset($_POST['submit'])){
+       
+        $captchaTest = $_POST['captchaTest'];
+        $cpatchaTextBox = $_POST['cpatchaTextBox'];
+        
+        if($captchaTest == $cpatchaTextBox){
+           
+            $fname = $_POST['fname'];
+            $lname = $_POST['lname'];
+            $company = $_POST['company'];
+            $phone = $_POST['phone'];
+            $email = $_POST['email'];
+            $job_title = $_POST['job_title'];
+            $comments = $_POST['comments'];
+            $avgMonInovoice = $_POST['avgMonInovoice'];
+            $circulus = $_POST['circulus'];
+            $country_code = $_POST['country_code'];
+        
+            $to = "info@beejakpay.com,vpraveen.designer@gmail.com,sanjusingh736@gmail.com";
+            $subject = "BEEJAKPAY NOTIFICATION";
+            $message = "Hello BEEJAKPAY, \n".$fname." ".$lname." try to contact you and bleow are the details : \nCompany : ".$company."\nPhone Number :".$country_code." ".$phone."\nEamil-Id : ".$email."\nJob Title : ".$job_title."\nAverage Monthly Invoices Processed : ".$avgMonInovoice."\nAbout Circulus : ".$circulus."\nComments : ".$comments;
+            
+           
+            $headers = 'From: info@beejakpay.com' ."\r\n";
+            $headers .= 'Cc: vpraveen.designer@gmail.com' . "\r\n";
+            $headers .='Reply-To: info@beejakpay.com'. "\r\n" ;
+            $headers .= "MIME-Version: 1.0" . "\r\n";
+            $headers .='X-Mailer: PHP/' . phpversion();
+            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+            if(mail($to,$subject,$message,$headers)){
+                ?>
+<script>
+    $('#success_modal').modal('show');
+</script>
+<?php
+            }
+            else{
+                ?>
+<script>
+    $('#warning_modal').modal('show');
+</script>
+<?php
+            }
+            
+        }
+
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from zwin.io/html/riyaqas/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Mar 2022 06:41:22 GMT -->
 
 <head>
     <meta charset="UTF-8">
@@ -36,17 +87,17 @@
 
 </head>
 
-<body>
+<body onload="createCaptcha()">
 
     <!-- preloader area start -->
     <!-- <div class="preloader" id="preloader">
-    <div class="preloader-inner">
-        <div class="spinner">
-            <div class="dot1"></div>
-            <div class="dot2"></div>
+        <div class="preloader-inner">
+            <div class="spinner">
+                <div class="dot1"></div>
+                <div class="dot2"></div>
+            </div>
         </div>
-    </div>
-</div> -->
+    </div> -->
     <!-- preloader area end -->
 
     <!-- search Popup -->
@@ -704,15 +755,39 @@
                     <div class="contact-info">
                         <h4 class="title">Contact info:</h4>
                         <p><span>GLOBAL DEVELOPMENT CENTER:</span></p>
-                        <p class="sub-title">Why I say old chap that is, spiffing jolly good a load of old tosh
-                            spend a penny tosser arse over tosh</p>
-                        <p>Address: 198 West 21th Street, Suite 721 <br> New York NY 10010</p>
-                        <p><span>Mobile:</span> +088 012121240</p>
-                        <p><span>E-mail:</span> riyaqas@gmail.com</p>
+                        <!-- <p class="sub-title">Plot: 12/1, Sector 1, HUDA Techno Enclave Madhapur, HITEC City
+                            Hyderabad-500081, India</p> -->
+                        <p>Plot: 12/1, Sector 1, HUDA Techno Enclave Madhapur, HITEC City
+                            Hyderabad-500081, India</p>
+                        <p><b><i class="fa fa-phone" aria-hidden="true"></i> </b> +91-800-826-6133</p>
+                        <p><b><i class="fa fa-fax" aria-hidden="true"></i></b> +91-40-29805495</p>
+
+                        <p><span></span></p>
+                        <div class="col-mob-12">
+                            <p>
+                                <span>
+                                    <i class="fa fa-building-o" aria-hidden="true"></i>
+                                    Middle East (DubaiOffice):
+                                </span>
+                            </p>
+                            <p>P O Box 96642, Dubai, UAE</p>
+                            <p><i class="fa fa-phone" aria-hidden="true"></i> +971-55-797-1221</p>
+                        </div>
+                        <div class="col-mob-12">
+                            <p>
+                                <span>
+                                    <i class="fa fa-building-o" aria-hidden="true"></i>
+                                    Corporate Office:
+                                </span>
+                            </p>
+                            <p>5177 Richmond Ave #570, Houston TX 77056
+                            <p>
+                            <p><i class="fa fa-phone" aria-hidden="true"></i> 281-501-1418</p>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-7 offset-xl-1">
-                    <form class="riyaqas-form-wrap mt-5 mt-lg-0">
+                    <!-- <form class="riyaqas-form-wrap mt-5 mt-lg-0">
                         <div class="row custom-gutters-16">
                             <div class="col-md-6">
                                 <div class="single-input-wrap">
@@ -742,6 +817,167 @@
                                 <a class="btn btn-red mt-0" href="#">Send</a>
                             </div>
                         </div>
+                    </form> -->
+
+                    <form action="" method="post" onsubmit="validateCaptcha()">
+                        <div class="form-group">
+                            <label for="Name">Name <span class="mandField">*</span></label>
+                            <div class="row">
+                                <div class="col-sm-6 col-tab-6">
+                                    <input type="text" class="form-control" placeholder="First" id="fname" name="fname"
+                                        required>
+                                </div>
+                                <div class="col-sm-6 col-tab-6">
+                                    <input type="text" class="form-control" placeholder="Last" id="lname" name="lname"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Company">Company <span class="mandField">*</span></label>
+                            <input type="text" class="form-control" name="company" id="company" required>
+                        </div>
+
+                        <div class="form-group country_selection">
+                            <label for="Phone">Phone <span class="mandField">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">
+                                    <span id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        <img src="assets/img/ind.png" class="selected_country"
+                                            id="selected_country_img" />
+                                        <input type="hidden" name="selected_country" value="assets/img/ind.png"
+                                            id="selected_country" />
+                                        <span class="caret"></span>
+                                    </span>
+                                    <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                        <li><input type="radio" name="country_code" value="+91-" checked /><img
+                                                src="assets/img/ind.png" />
+                                            (IND)</li>
+                                        <li><input type="radio" name="country_code" value="+44" /><img
+                                                src="assets/img/us.png" /> (USA)</li>
+                                    </ul>
+                                </span>
+                                <input type="number" class="form-control" name="phone" id="phone" required>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label for="Company">Email <span class="mandField">*</span></label>
+                            <input type="email" class="form-control" name="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Company">Job Title <span class="mandField">*</span></label>
+                            <input type="text" class="form-control" name="job_title" id="job_title" required>
+                        </div>
+                        <div class="average_monthly">
+                            <label for="Company" style="margin-bottom:0px;">Average Monthly Invoices Processed <span
+                                    class="mandField">*</span></label>
+                            <div class="row">
+                                <div class="col-sm-6 col-tab-6 col-xsm-12">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="avgMonInovoice" value="100-499" required> 100-499
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="avgMonInovoice" value="1000-2499" required>
+                                            1000-2499
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-6 col-tab-6 col-xsm-12">
+
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="avgMonInovoice" value="500-999" required> 500-999
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="avgMonInovoice" value="2500+" required> 2500+
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="about_circulus" style="margin-top:10px;">
+                            <label for="Company" style="margin-bottom:0px;">How Did you Hear About Us? <span
+                                    class="mandField">*</span></label>
+                            <div class="row">
+                                <div class="col-sm-6 col-tab-6 col-xsm-12">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="circulus" value="Email Campaign" required> Email
+                                            Campaign
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="circulus" value="Social Media" required> Social
+                                            Media
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="circulus" value="Referral / Word of Mouth"
+                                                required> Referral / Word
+                                            of Mouth
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-tab-6 col-xsm-12">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="circulus" value="Search Engine" required> Search
+                                            Engine
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="circulus" value="Trade Show / Event" required>
+                                            Trade Show / Event
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="circulus" value="Other" required> Other
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Company">Comments</label>
+                            <textarea rows="5" class="form-control" name="comments" id="comments"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="captcha_view">
+                                <div id="captcha"></div>
+                                <i class="fa fa-refresh" aria-hidden="true" onclick="createCaptcha()"></i>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <input type="hidden" placeholder="Captcha" name="captchaTest" id="captchaTest"
+                                style="padding: 7px;border: 1px solid #ccc;outline: none;" autocomplete="off" />
+                            <input type="text" placeholder="Captcha" name="cpatchaTextBox" id="cpatchaTextBox"
+                                style="padding: 7px;border: 1px solid #ccc;outline: none;" autocomplete="off" />
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" name="submit" class="btn btn-danger"
+                                style="border-radius:0">Submit</button>
+                        </div>
+
                     </form>
                 </div>
             </div>
@@ -856,9 +1092,88 @@
     <script src="assets/js/mediaelement.min.js"></script>
     <!-- main js -->
     <script src="assets/js/main.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".dropdown-menu  li").click(function () {
+                var selected_country = $(this).find("img").attr("src");
+                $(".selected_country").attr("src", selected_country);
+                $("#selected_country").val(selected_country);
+            });
+            $(".menu_icon").click(function () {
+                $("nav").toggleClass("display_block");
+            });
 
+
+            // -- for submenu options and plus minus symbole --
+
+            // $(".has_submenu").click(function(){
+            //   $(".sub_menu").toggleClass("display_block");
+            //   if($(this).find("i").hasClass('fa-plus')){
+            //     $(this).find("i").removeClass("fa-plus").addClass("fa-minus");
+            //   }
+            //   else{
+            //     $(this).find("i").removeClass("fa-minus").addClass("fa-plus");
+            //   }
+            // });
+
+            $(".input-group-addon input[type=radio]").on("click", function () {
+                $(".country_selection .dropdown-menu li").click();
+            });
+
+            setTimeout(function () {
+                $('#success_modal').modal('hide');
+            }, 2000);
+
+
+            // for header fixed
+            $(window).scroll(function () {
+                var header = $('#myHeader'),
+                    scroll = $(window).scrollTop();
+
+                if (scroll >= 120) header.addClass('stick_header');
+                else header.removeClass('stick_header');
+            });
+        });
+
+
+        //   for captcha
+        var code;
+        function createCaptcha() {
+            //clear the contents of captcha div first 
+            document.getElementById('captcha').innerHTML = "";
+            var charsArray =
+                "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var lengthOtp = 6;
+            var captcha = [];
+            for (var i = 0; i < lengthOtp; i++) {
+                //below code will not allow Repetition of Characters
+                var index = Math.floor(Math.random() * charsArray.length + 1); //get the next character from the array
+                if (captcha.indexOf(charsArray[index]) == -1)
+                    captcha.push(charsArray[index]);
+                else i--;
+            }
+            var canv = document.createElement("canvas");
+            canv.id = "captcha";
+            canv.width = 100;
+            canv.height = 50;
+            var ctx = canv.getContext("2d");
+            ctx.font = "25px Georgia";
+            ctx.strokeText(captcha.join(""), 0, 30);
+            //storing captcha so that can validate you can save it somewhere else according to your specific requirements
+            code = captcha.join("");
+            document.getElementById("captcha").appendChild(canv); // adds the canvas to the body element
+            document.getElementById("captchaTest").value = code;
+            document.getElementById("cpatchaTextBox").value = "";
+        }
+        function validateCaptcha() {
+            if (!(document.getElementById("cpatchaTextBox").value == code)) {
+                $('#captchaError_modal').modal('show');
+                event.preventDefault();
+                createCaptcha();
+            }
+        }
+    </script>
 </body>
 
-<!-- Mirrored from zwin.io/html/riyaqas/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Mar 2022 06:42:25 GMT -->
 
 </html>
